@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Session Bug Demo
 
-## Getting Started
+This project demonstrates a session refresh issue in Next.js where the session state is not immediately updated after logout until a hard refresh is performed.
 
-First, run the development server:
+## Setup Instructions
 
+1. Install dependencies:
+```bash
+npm install
+# or
+bun install
+# or
+pnpm install
+```
+
+2. Run database migrations:
+```bash
+npm run db:migrate
+# or
+bun db:migrate
+# or
+pnpm db:migrate
+```
+
+3. Start the development server:
 ```bash
 npm run dev
 # or
-yarn dev
+bun dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Known Issue
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+When testing the authentication flow, you may notice that:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. After registering a new account, the session state updates correctly
+2. After logging out, the session state **does not** update immediately
+3. The session state only reflects the logout after performing a hard refresh of the page
 
-## Learn More
+This is a demonstration of a session refresh issue in Next.js where the client-side state is not immediately synchronized with the server-side session state after logout.
 
-To learn more about Next.js, take a look at the following resources:
+## Testing Steps
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Register a new account
+2. Verify you are logged in
+3. Click the logout button
+4. Notice that the UI still shows you as logged in
+5. Perform a hard refresh (Ctrl/Cmd + Shift + R)
+6. Now the UI correctly shows you as logged out
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This issue affects the user experience as it creates a temporary inconsistency between the actual authentication state and what is displayed to the user.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
