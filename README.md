@@ -1,4 +1,5 @@
 # Next.js Session Bug Demo
+[Better Auth nextjs bug.webm](https://github.com/user-attachments/assets/a249e27b-94a0-49fe-b6d9-fb7f00534e79)
 
 This project demonstrates a session refresh issue in Next.js where the session state is not immediately updated after logout until a hard refresh is performed.
 
